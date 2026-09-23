@@ -1,0 +1,27 @@
+# Blueprint de Render. En el dashboard: New > Blueprint > seleccionar este repo/carpeta,
+# Render lee este archivo solo. Ver README.md ("Desplegar en Render") para el paso a paso
+# y por qué es "web" en vez de "worker" (Render no tiene worker gratis).
+services:
+  - type: web
+    name: pororo-control-bot
+    runtime: python
+    plan: free
+    region: oregon
+    branch: main
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.0"
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: BOT_ENCRYPTION_KEY
+        sync: false
+      - key: BOT_DB_PATH
+        value: bot_sessions.db
+      - key: DAILY_DIGEST_HOUR
+        value: "20"
